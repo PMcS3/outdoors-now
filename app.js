@@ -9,10 +9,11 @@ const port = 3000;
 // make handlebars the view engine
 const hbs = require('express-handlebars');
 app.engine('hbs', hbs({
-    layoutsDir   : './views',
-    defaultLayout: 'index',
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    defaultLayout: 'main',
     extname: '.hbs'
 }));
+
 app.set('view engine', 'hbs');
 
 // static public directory
