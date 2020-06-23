@@ -3,3 +3,10 @@
 body, html {
     color: #333;
 }
+h1 {
+    text-align: center;
+}
+form {
+    text-align: center;
+}
+#mapid { height: 215px; }
