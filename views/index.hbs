@@ -2,21 +2,26 @@
     <div class=".container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-7" style="margin-top: 50px;">
-                    <h1 class="text-success">{{title}}</h1>
-                    <div class="card" >
+                    <div class="row justify-content-center">
+                            <h1 class="text-success" >OutdoorsNow </h1>
+                    </div>
+                    <div class="row justify-content-center">
+                            <h4 class="text-secondary">Get Outside of Quarantine</h4>
+                    </div>
+                        <div class="card" >
                         <div class="card-body">
                             <h5 class="card-title"></h5>
-                            <div id="mapid"> </div>
-
+                            <div id="mapid" class="hidden"> </div>
+                            <h3 class="text-success"> Find an outdoor space near you!</h3>
                             <form>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text text-success" id="inputGroup-sizing-default">Your City/Town</span>
                                     </div>
-                                    <input type="text" class="form-control text-success" id="city" name="city" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Denver">
+                                    <input type="text" class="form-control text-secondary" id="city" name="city" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Denver">
                                 </div>
                                 <div class="input-group">
-                                    <select class="custom-select text-success" id="state" value="Colorado">
+                                    <select class="custom-select text-secondary" id="state" value="Colorado">
                                         <option <!-->State--></option>
                                         <option value="Alabama">Alabama</option>
                                         <option value="Alaska">Alaska</option>

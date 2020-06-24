@@ -34,12 +34,25 @@ router.get('/api/trails/:id?', async (req, res) => {
 	let trails = trailData.trails;
 	let trail = trails[0];
 
-	let name = JSON.stringify(trail.name);
-	let location = JSON.stringify(trail.name);
+	let name = JSON.stringify(trail.name).slice(1,-1);
+
+	let location = JSON.stringify(trail.location).slice(1,-1);
+	let summary = JSON.stringify(trail.summary).slice(1,-1);
+	let pic = JSON.stringify(trail.imgSmallMed).slice(1,-1);
+	let stars = JSON.stringify(trail.stars);
+	let length = JSON.stringify(trail.length);
+	
+
 	res.render('info', { 
 		title : name, 
 		trailLocation : location,
-		trailName : name });
+		trailName : name,
+		trailSummary : summary,
+		trailImage : pic,
+		trailLength : length,
+		stars : stars
+		 }
+	);
 	//console.log(trail);
 	// data: name, location, largeImg, length, rating
 	/*
@@ -71,7 +84,7 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 	lon = osm[0].lon;
 
 
-	let trailsURL = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&maxResults=20&key=${hikingProjectKey}`;
+	let trailsURL = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=30&maxResults=100&key=${hikingProjectKey}`;
 
 	const fetchy = await fetch(trailsURL);
 	const list = await fetchy.json();

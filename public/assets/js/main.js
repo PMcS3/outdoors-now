@@ -19,6 +19,15 @@ $("form").submit(
     }
 );
 
+
+
+$("#button").click(function () {
+    $("form").hide();
+    $("h3").hide();
+    $("#mapid").show();
+});
+
+/*
 $(document).on("click", ".info", function (e) {
     let thisID = jQuery(this).attr("id");
 
@@ -26,11 +35,6 @@ $(document).on("click", ".info", function (e) {
 
     return false;
 });
-
-$("#button").click(function () {
-    $("form").hide();
-});
-
 async function getInfo(id) {
     try {
 
@@ -46,13 +50,14 @@ async function getInfo(id) {
             console.error("FAIL", JSON.stringify(error));
         }).always((result) => {
             console.log("ALWAYS");
-            /* console.log("ALWAYS", JSON.stringify(result)) */
+             console.log("ALWAYS", JSON.stringify(result)) 
         });
     } catch (err) {
         console.error(err);
     }
 
 }
+*/
 
 // async function to get data
 async function getData() {
@@ -108,7 +113,7 @@ async function getData() {
 
             let str = "";
             for (let i = 0; i < trails.length; i++) {
-                str += `<li class="list-group-item">&nbsp;<img src="` + trails[i].imgSqSmall + `">&nbsp;&nbsp;<strong>` + trails[i].name + " </strong> - " + trails[i].location + `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="info btn btn-success" id=${trails[i].id} type="button"> More Info </button> </li>`;
+                str += `<li class="list-group-item">&nbsp;<img src="` + trails[i].imgSqSmall + `">&nbsp;&nbsp;<strong>` + trails[i].name + " </strong> - " + trails[i].location + `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href= "/api/trails/${trails[i].id}"><button class="info btn btn-success" type="button"> More Info </button></a> </li>`;
                 createMarker(trails[i].latitude, trails[i].longitude, trails[i].name, trails[i].location);
             }
             $("#trails").html(str);
