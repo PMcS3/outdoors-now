@@ -116,7 +116,7 @@ async function addFavorite(id) {
             url: url, // path
             data: {}
         }).done(result => { 
-            
+            console.log("Favorited this trail");
             console.log(JSON.stringify(result));
 
         }).fail(error => {

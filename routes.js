@@ -214,6 +214,9 @@ router.post('/api/trails/favorites/:id?', async (req, res) => {
 		lon VARCHAR(80)
 	  );
 
+	  ALTER TABLE outdoors
+		ADD COLUMN trailimagesml data_type VARCHAR(1000);
+
 	
 */
 });
