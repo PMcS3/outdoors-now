@@ -19,7 +19,8 @@ $(document).ready( async function (e) {
             console.log(results);
             let str = "";
             for (let i = 0; i < results.length; i++) {
-                str += `<li class="list-group-item">&nbsp;<img src="` + results[i].trailimagesml + `"> <br> <br> <strong>` + results[i].trailname + " </strong> <br> " + results[i].traillocation + `<a class="btn btn-sml btn-success float-right" href="/api/trails/${results[i].id}" role="button">More Info</a></li>`;
+                let id = results[i].id;
+                str += `<li class="list-group-item">&nbsp;<img src="` + results[i].trailimagesml + `"> <br> <br> <strong>` + results[i].trailname + " </strong> <br> " + results[i].traillocation + `<a class="btn btn-sml btn-success float-right" href="/api/trails/${id}" role="button">More Info</a></li>`;
             }
             console.log(str);
             $("#favorites").html(str);
@@ -190,7 +191,8 @@ async function getData() {
 
             let str = "";
             for (let i = 0; i < trails.length; i++) {
-                str += `<li class="list-group-item">&nbsp;<img src="` + trails[i].imgSqSmall + `">&nbsp;&nbsp;<strong>` + trails[i].name + " </strong> - " + trails[i].location + `<a class="btn btn btn-success float-right" href="/api/trails/${trails[i].id}" role="button">More Info</a></li>`;
+                let id = trails[i].id;
+                str += `<li class="list-group-item">&nbsp;<img src="` + trails[i].imgSqSmall + `">&nbsp;&nbsp;<strong>` + trails[i].name + " </strong> - " + trails[i].location + `<a class="btn btn btn-success float-right" href="/api/trails/${id}" role="button">More Info</a></li>`;
                 createMarker(trails[i].latitude, trails[i].longitude, trails[i].name, trails[i].location);
             }
             $("#trails").html(str);

@@ -30,39 +30,108 @@ router.get('/api', async (req, res) => {
 		message: "hello"
 	});
 });
-
 // either make connection here or make it in app.js and share
 
 router.get('/api/trails/:id?', async (req, res) => {
+	req.is('text/html');
+	req.accepts(['html', 'json']);
 	let id = req.params.id;
-
-	let idURL = `https://www.hikingproject.com/data/get-trails-by-id?ids=${id}&key=${hikingProjectKey}`;
-
-	const data = await fetch(idURL);
-	const trailData = await data.json();
-	let trails = trailData.trails;
-	let trail = trails[0];
-
-	let name = JSON.stringify(trail.name).slice(1,-1);
-
-	let location = JSON.stringify(trail.location).slice(1,-1);
-	let summary = JSON.stringify(trail.summary).slice(1,-1);
-	let pic = JSON.stringify(trail.imgSmallMed).slice(1,-1);
-	let stars = JSON.stringify(trail.stars);
-	let length = JSON.stringify(trail.length);
+	console.log(id[0]);
+	console.log(id);
+	if ( id[0] === "0") {
+		const client = await pool.connect();
+		console.log("connected");
+		client.query("SELECT * FROM outdoors WHERE id = $1 LIMIT 1;", [id], function(err, result) {
+            //often you wont want to close a client if there's a query error
+            //but if you DO want to close the client you can truthy it to the done method...
+            //done(true)  and it will dispose of it for you. Do NOT close it manually because you'll then
+            //return a closed client to the pool, and the next person to check the client out will get a weird error
+            if(err) {
+                client.end();
+                console.log(err.stack);
+            }
+            client.end();
+			res.render('info', { 
+		
+			title : result.rows[0].trailname, 
+			trailLocation : result.rows[0].traillocation,
+			trailName : result.rows[0].trailname,
+			trailSummary : result.rows[0].trailsummary,
+			trailLength : result.rows[0].traillength,
+			stars : result.rows[0].stars,
+			trailID : result.rows[0].id
+		
+			});
+        });
+    
+		/*
+		const client = await pool.connect();
+		console.log("connected");
+		const result = await client.query({
+		rowMode: 'array',
+		text: 'SELECT * FROM outdoors WHERE id = ${id} LIMIT 1;',
+		});
+		res.render("info", {
+			title : result.fields[0].trailname, 
+			trailLocation : result.fields[0].traillocation,
+			trailName : result.fields[0].trailname,
+			trailSummary : result.fields[0].trailsummary,
+			trailLength : result.fields[0].traillength,
+			stars : result.fields[0].stars,
+			trailID : result.fields[0].id
 	
+			});
+		console.log(result.rows);
+		await client.end();
+		/*
+		db.any(`SELECT * FROM outdoors WHERE id = ${id} LIMIT 1;`)
+		.then(function (data) {
+			res.status(200)
+			.render("info", {
+				title : data[0].trailname, 
+				trailLocation : data[0].traillocation,
+				trailName : data[0].trailname,
+				trailSummary : data[0].trailsummary,
+				trailLength : data[0].traillength,
+				stars : data[0].stars,
+				trailID : data[0].id
+		
+				});
+			})
+		.catch(function (err) {
+			return err.stack;
+		});
+		*/
 
-	let body = res.render("info", { 
-		title : name, 
-		trailLocation : location,
-		trailName : name,
-		trailSummary : summary,
-		trailImage : pic,
-		trailLength : length,
-		stars : stars,
-		trailID : id
-		 }
-	);
+	}
+	else {
+		let idURL = `https://www.hikingproject.com/data/get-trails-by-id?ids=${id}&key=${hikingProjectKey}`;
+
+		const data = await fetch(idURL);
+		const trailData = await data.json();
+		let trails = trailData.trails;
+		let trail = trails[0];
+
+		let name = JSON.stringify(trail.name).slice(1,-1);
+
+		let location = JSON.stringify(trail.location).slice(1,-1);
+		let summary = JSON.stringify(trail.summary).slice(1,-1);
+		let pic = JSON.stringify(trail.imgSmallMed).slice(1,-1);
+		let stars = JSON.stringify(trail.stars);
+		let length = JSON.stringify(trail.length);
+
+		let body = res.render("info", { 
+			title : name, 
+			trailLocation : location,
+			trailName : name,
+			trailSummary : summary,
+			trailImage : pic,
+			trailLength : length,
+			stars : stars,
+			trailID : id
+			}
+		);
+	}
 });
 
 router.post('/api/trails/favorites', async (req, res) => {
