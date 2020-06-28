@@ -11,6 +11,7 @@
   "dependencies": {
     "alert": "^5.0.0",
     "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "fetch": "^1.1.0",
