@@ -1,12 +1,13 @@
 "use strict";
 let mapBoxToken = "pk.eyJ1IjoicG1jczMiLCJhIjoiY2tibDAzaG1qMTRiOTJxbWwxbzM2YmZtMCJ9.ELKTHnbZqERM3UaoUZ29Pw";
 
+const rootURL = "https://outdoorsnow.herokuapp.com";
 
 
 $(document).ready( async function (e) {
     
     try {
-        let url = "http://localhost:3000/api/trails/favorites";
+        let url = `${rootURL}/api/trails/favorites`;
 
         return $.ajax({
             type: "POST", // method
@@ -108,7 +109,7 @@ $("#button").click(function () {
 async function addFavorite(id) {
     try {
 
-        let url = `http://localhost:3000/api/trails/favorites/` + id;
+        let url = `${rootURL}/api/trails/favorites/` + id;
         console.log(url);
         return $.ajax({
             type: "POST", // method
@@ -141,7 +142,7 @@ async function getData() {
             return;
         }
 
-        let url = "http://localhost:3000/api/trails/" + city + "/" + state;
+        let url = `${rootURL}/api/trails/` + city + "/" + state;
 
         return $.ajax({
             type: "GET", // method
@@ -218,7 +219,7 @@ async function saveFavorite(name, location, summary, length, rating) {
         let id = "0" + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString();
 
 
-        let url = `http://localhost:3000/api/favorites/add`;
+        let url = `${rootURL}/api/favorites/add`;
         return $.ajax({
             type: "POST", // method
             url: url, // path
