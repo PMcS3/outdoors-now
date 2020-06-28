@@ -1,7 +1,67 @@
 "use strict";
 let mapBoxToken = "pk.eyJ1IjoicG1jczMiLCJhIjoiY2tibDAzaG1qMTRiOTJxbWwxbzM2YmZtMCJ9.ELKTHnbZqERM3UaoUZ29Pw";
 
-$("form").submit(
+
+
+$(document).ready( async function (e) {
+    
+    try {
+        let url = "http://localhost:3000/api/trails/favorites";
+
+        return $.ajax({
+            type: "POST", // method
+            url: url,
+            data: {}
+        }).done(result => {
+            // tests
+            console.log(result);
+            let results = result.data;
+            console.log(results);
+            let str = "";
+            for (let i = 0; i < results.length; i++) {
+                str += `<li class="list-group-item">&nbsp;<img src="` + results[i].trailimagesml + `"> <br> <br> <strong>` + results[i].trailname + " </strong> <br> " + results[i].traillocation + `<a class="btn btn-sml btn-success float-right" href="/api/trails/${results[i].id}" role="button">More Info</a></li>`;
+            }
+            console.log(str);
+            $("#favorites").html(str);
+
+        }).fail(error => {
+            console.error("FAIL", JSON.stringify(error));
+        }).always((result) => {
+            console.log("ALWAYS");
+            /* console.log("ALWAYS", JSON.stringify(result)) */
+
+
+        });
+    } 
+    catch (err) {
+        console.error(err);
+    }
+
+
+
+});
+
+$(".share").submit( function (e) {
+        e.preventDefault();
+        let name = $("#name").val();
+        let location = $("#town").val() + ", " + $("#state1").val();
+        let summary  = $("#summary").val();
+        let length = $("#length").val();
+        let rating = $("#rating").val();
+         
+        saveFavorite(name, location, summary, length, rating);
+        console.log("saved");
+        $(".done").removeClass("btn-success");
+        $(".done").addClass("btn-warning");
+        $(".done").text("Submitted");
+        return false;
+        
+    }
+);
+
+
+
+$(".search").submit(
     // anonymous callback function is called
     function (e) {
         //get city coordinates from OSM
@@ -19,34 +79,49 @@ $("form").submit(
     }
 );
 
-$(document).on("click", ".info", function (e) {
-    let thisID = jQuery(this).attr("id");
-
-    getInfo(thisID);
-
-    return false;
+$(".btn-small").click( function (e) {
+    console.log("smt");
 });
+
+$(".fav").ready( function () 
+{
+    $(".fav").click( function (e) 
+    {
+        let id = $(this).attr('id');
+        console.log(id);
+        addFavorite(id);
+        $(this).removeClass("btn-outline-success");
+        $(this).addClass("btn-warning");
+        $(this).text("☆ Favorited");
+
+    });
+});
+
 
 $("#button").click(function () {
     $("form").hide();
+    $("h3").hide();
+    $("#mapid").show();
 });
 
-async function getInfo(id) {
+async function addFavorite(id) {
     try {
 
-        let url = "http://localhost:3000/api/trails/" + id;
-
+        let url = `http://localhost:3000/api/trails/favorites/` + id;
+        console.log(url);
         return $.ajax({
-            type: "GET", // method
-            url: url // path
-        }).done(result => {
-            //use JSON data as HTML text
-            //console.log(JSON.stringify(result));
+            type: "POST", // method
+            url: url, // path
+            data: {}
+        }).done(result => { 
+            
+            console.log(JSON.stringify(result));
+
         }).fail(error => {
             console.error("FAIL", JSON.stringify(error));
         }).always((result) => {
-            console.log("ALWAYS");
-            /* console.log("ALWAYS", JSON.stringify(result)) */
+            
+             console.log("ALWAYS", JSON.stringify(result));
         });
     } catch (err) {
         console.error(err);
@@ -54,11 +129,13 @@ async function getInfo(id) {
 
 }
 
+
 // async function to get data
 async function getData() {
     try {
         let city = $("#city").val().toLowerCase();
         let state = $("#state").val().toLowerCase();
+
         if (city == "" || state == "") {
             return;
         }
@@ -69,11 +146,16 @@ async function getData() {
             type: "GET", // method
             url: url // path
         }).done(result => {
-            // tests
+            if ( result === null || result.trails === undefined) {
+                console.log("no data found");
+                $(".center").html(`Shucks!  -  We don't have anything near ${city}, but there are plenty of other wide open spaces <a href="/"> to explore<a>`);
+                return;
+            }
+            else {
             let lat = result.lat;
             let lon = result.lon;
             let trails = result.trails; // array of trail objects
-
+            
             //$(".trails").html(JSON.stringify(result));
             let mymap = L.map('mapid').setView([`${lat}`, `${lon}`], 10);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -108,13 +190,13 @@ async function getData() {
 
             let str = "";
             for (let i = 0; i < trails.length; i++) {
-                str += `<li class="list-group-item">&nbsp;<img src="` + trails[i].imgSqSmall + `">&nbsp;&nbsp;<strong>` + trails[i].name + " </strong> - " + trails[i].location + `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="info btn btn-success" id=${trails[i].id} type="button"> More Info </button> </li>`;
+                str += `<li class="list-group-item">&nbsp;<img src="` + trails[i].imgSqSmall + `">&nbsp;&nbsp;<strong>` + trails[i].name + " </strong> - " + trails[i].location + `<a class="btn btn btn-success float-right" href="/api/trails/${trails[i].id}" role="button">More Info</a></li>`;
                 createMarker(trails[i].latitude, trails[i].longitude, trails[i].name, trails[i].location);
             }
             $("#trails").html(str);
             $(".card-title").html(heading);
 
-
+            }
         }).fail(error => {
             console.error("FAIL", JSON.stringify(error));
         }).always((result) => {
@@ -125,8 +207,39 @@ async function getData() {
         });
     } catch (err) {
         console.error(err);
+    }  
+}
+
+
+async function saveFavorite(name, location, summary, length, rating) {
+    try {
+        let id = "0" + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString();
+
+
+        let url = `http://localhost:3000/api/favorites/add`;
+        return $.ajax({
+            type: "POST", // method
+            url: url, // path
+            data: {
+                "id" : id,
+                "name" : name,
+                "location" : location,
+                "summary" : summary,
+                "length" : length,
+                "rating" : rating
+            }
+        }).done(result => { 
+            
+            console.log("ADDED");
+            console.log(result);
+
+        }).fail(error => {
+            console.error("FAIL", JSON.stringify(error));
+        }).always((result) => {
+            
+             console.log("ALWAYS", JSON.stringify(result));
+        });
+    } catch (err) {
+        console.error(err);
     }
-
-
-
 }

@@ -3,10 +3,33 @@
 body, html {
     color: #333;
 }
-h1 {
+h1 .text-success {
+    font-size: 700;
     text-align: center;
 }
+h3 {
+    text-align: center;
+}
+.hidden {
+    display: none;
+}
+
+.btn-circle.btn-xl { 
+    width: 70px; 
+    height: 70px; 
+    padding: 10px 16px; 
+    border-radius: 35px; 
+    font-size: 30px; 
+    font-weight: 900;
+    text-align: center; 
+} 
+label {
+    font-size: 20px;
+    font-weight: 500;
+}
+
 form {
     text-align: center;
 }
 #mapid { height: 215px; }
+#map { height: 200px; }

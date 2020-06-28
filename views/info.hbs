@@ -1,0 +1,43 @@
+            <div class=".container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7" style="margin-top: 50px;">
+                        <div class="row justify-content-center">
+                           <a href="/"> <h1 class="text-success" >OutdoorsNow </h1>
+                        </div>
+                        <div class="row justify-content-center">
+                            <h4 class="text-secondary">Get Outside of Quarantine</h4></a>
+                        </div>
+                            <div class="card">
+                                <h5 class="card-header">{{ trailName }}</h5>
+                                    <div class="card-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <img src={{ trailImage }} class="img-fluid">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h5 class="card-title"> {{ trailLocation }}</h5>
+                                                    <p class="card-text"> Summary: {{ trailSummary }} </p>
+                                                    <p class="card-text"> Trail is {{ trailLength }} miles long </p>
+                                                    <p class="card-text"> Rating: {{ stars }}/5 stars </p>
+                                                    <br>
+                                                    <button type="button" class="btn btn-outline-success fav" id="{{trailID}}"> ☆ Favorite?</button>
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-3 pr-5" style="margin-top: 100px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <center><h5 class="card-title text-success"> Community Favorites ☆</h5></center>
+                            <ul class="list-group list-group-flush" id="favorites">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+               </div> 
+            </div>

@@ -1,29 +1,45 @@
 
     <div class=".container-fluid">
             <div class="row justify-content-center">
-                <div class="col-lg-7" style="margin-top: 50px;">
-                    <h1 class="text-success">{{title}}</h1>
-                    <div class="card" >
+                <div class="col-lg-3 pl-5" style="margin-top: 100px">
+                    <div class="card">
+                        <img class="card-img-top" src="https://www.scienceintheclassroom.org/sites/default/files/styles/open_graph/public/magazine-images/06_Seeing-the-forest-for-the-trees.jpg?itok=ArG80Ken" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <div id="mapid"> </div>
-
-                            <form>
+                            <h5 class="card-title text-success">Nature is good for you!</h5>
+                            <p class="card-text">During this period of social distancing and physical isolation, people are prone to develop unhealthy sedentary lifestyles and stay inside their homes all of the time. Natural parks provide open spaces where people can get outside, get exercise by hiking trails, and experience nature, while continuing to socially distance. A wide range of research shows that experiencing the natural world is associated with increased well-being; activities in natural environments are associated with more favorable emotional and attentional outcomes than similar activities in synthetic environments.</p>
+                            <a href="https://www.takingcharge.csh.umn.edu/how-does-nature-impact-our-wellbeing#:~:text=Being%20in%20nature%2C%20or%20even,the%20production%20of%20stress%20hormones." class="btn btn-success">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" style="margin-top: 50px;">
+                    <div class="row justify-content-center">
+                           <a href="/"> <h1 class="text-success" >OutdoorsNow </h1>
+                    </div>
+                    <div class="row justify-content-center">
+                            <h4 class="text-secondary">Get Outside of Quarantine</h4> </a>
+                    </div>
+                        <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title center"></h5>
+                            <p class="shucks text-success"></p>
+                            <div id="mapid" class="hidden"> </div>
+                            <h3 class="text-success"> Find an outdoor space near you!</h3>
+                            <form class="search">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text text-success" id="inputGroup-sizing-default">Your City/Town</span>
                                     </div>
-                                    <input type="text" class="form-control text-success" id="city" name="city" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Denver">
+                                    <input type="text" class="form-control text-secondary" id="city" name="city" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                                 </div>
                                 <div class="input-group">
-                                    <select class="custom-select text-success" id="state" value="Colorado">
-                                        <option <!-->State--></option>
+                                    <select class="custom-select text-secondary" id="state">
+                                        <option selected> State </option>
                                         <option value="Alabama">Alabama</option>
                                         <option value="Alaska">Alaska</option>
                                         <option value="Arizona">Arizona</option>
                                         <option value="Arkansas">Arkansas</option>
                                         <option value="California">California</option>
-                                        <option value="Colorado" selected="selected">Colorado</option>
+                                        <option value="Colorado">Colorado</option>
                                         <option value="Connecticut">Connecticut</option>
                                         <option value="Delaware">Delaware</option>
                                         <option value="District Of Columbia">District Of Columbia</option>
@@ -81,9 +97,32 @@
                         <ul class="list-group list-group-flush" id="trails">
                         </ul>
                     </div>
+                    <br>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="text-success"> Share an outdoor space you know! </h3>
+                            
+                            <br>
+                            <center> <a href="/api/share" ><button type="button" class="btn btn-success btn-circle btn-xl">+</button></a> </center>
+                            <br>
+                            
+                        </div>
+                    </div>
                 </div>
+                <div class="col-lg-3 pr-5" style="margin-top: 100px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <center><h5 class="card-title">Favorited: Trails and Parks to Explore</h5></center>
+                            <ul class="list-group list-group-flush" id="favorites">
+                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-
+    
 
     
