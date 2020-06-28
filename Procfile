@@ -1,1 +1,1 @@
-web: npx nodemon --inspect --trace-warnings app.js
+web: node app.js
