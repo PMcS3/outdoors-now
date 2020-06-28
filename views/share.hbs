@@ -1,0 +1,61 @@
+ <div class=".container-fluid">
+     <div class="row justify-content-center">
+         <div class="col-lg-6" style="margin-top: 50px;">
+             <div class="row justify-content-center">
+                 <a href="/">
+                     <h1 class="text-success">OutdoorsNow </h1>
+             </div>
+             <div class="row justify-content-center">
+                 <h4 class="text-secondary">Get Outside of Quarantine</h4></a>
+             </div>
+             <div class="card">
+                 <div class="card-body">
+                     <center>
+                         <h5 class="card-title text-success"> {{ page }}</h5>
+                     </center>
+                     <form class="share">
+                         <div class="form-group">
+                             <label for="name"> {{ name }} </label>
+                             <input type="text" class="form-control" id="name" value="Montgomery Pinetum">
+                        </div>
+                             <br>
+                        <div class="form-group">
+                             <label for="town"> {{ town }} </label>
+                             <input type="text" class="form-control" id="town" value="Cos Cob"></input>
+                        </div>    
+                             <br>
+                        <div class="form-group">
+                             <label for="state"> {{ state }} </label>
+                             <input type="text" class="form-control" id="state1" value="Connecticut"></input>
+                        </div>     <br>
+                             <label for="summary"> {{ summary }} </label>
+                             <input type="text" class="form-control" id="summary" value="A lovely town arboretum with a pond, hilly pastures, and multiple trails"></input>
+                        <div class="form-group">
+                             <br>
+                             <label for="length"> {{ length }} </label>
+                             <input type="text" class="form-control" id="length" value="3"></input> <strong>
+                                 <p> miles </p></strong>
+                        </div>
+                        <div class="form-group">    
+                             <br>
+                             <label for="rating"> {{ rating }} </label>
+                             <input type="text" class="form-control" id="rating" value="3"></input>
+                         </div>
+                         <button type="submit" class="btn btn-success done"> Submit</button>
+                    </form>
+
+                 </div>
+             </div>
+         </div>
+         <div class="col-lg-3 pr-5" style="margin-top: 60px;">
+             <div class="card">
+                 <div class="card-body">
+                     <h5 class="card-title"><strong>Community Favorites:</strong> Trails and Parks to Explore</h5>
+                     <ul class="list-group list-group-flush" id="favorites">
+
+                     </ul>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
