@@ -1,5 +1,4 @@
 "use strict";
-
 const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
@@ -7,10 +6,18 @@ const fetch = require('node-fetch');
 const middleware = require("./middleware/debug-request-times");
 router.use(middleware.showRequests);
 const { Pool } = require('pg');
-const connection = require('./connection.json');
-const pool = new Pool(connection);
+const pool = new Pool({ connectionString: process.env.DATABASE_URL,
+	ssl: {
+	  rejectUnauthorized: false
+	}
+});
 var pgp = require('pg-promise')();
-const db = pgp(connection);
+const db = pgp({ connectionString: process.env.DATABASE_URL,
+	ssl: {
+	  rejectUnauthorized: false
+	}
+});
+
 //const { Client } = require('pg');
 //const client = new Client(connection);
 
@@ -311,7 +318,18 @@ router.post('/api/favorites/add', async (req, res) => {
 		res.send("success");
 	
 });
-
+router.get('/db', async (req, res) => {
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM test_table');
+      const results = { 'results': (result) ? result.rows : null};
+      res.render('pages/db', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  });
 
 
 module.exports = router;
