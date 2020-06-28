@@ -23,5 +23,15 @@
     "pg": "^8.2.1",
     "pg-promise": "^10.5.7",
     "yarn-install": "^1.0.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PMcS3/outdoors-now.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/PMcS3/outdoors-now/issues"
+  },
+  "homepage": "https://github.com/PMcS3/outdoors-now#readme"
 }
