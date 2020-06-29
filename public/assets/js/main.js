@@ -202,7 +202,7 @@ async function getData() {
                 createMarker(trails[i].latitude, trails[i].longitude, trails[i].name, trails[i].location);
             }
             $("#trails").html(str);
-            $(".card-title").html(heading);
+            $(".center").html(heading);
 
             }
         }).fail(error => {
