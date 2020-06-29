@@ -21,7 +21,12 @@ $(document).ready( async function (e) {
             let str = "";
             for (let i = 0; i < results.length; i++) {
                 let id = results[i].id;
-                str += `<li class="list-group-item">&nbsp;<img src="` + results[i].trailimagesml + `"> <br> <br> <strong>` + results[i].trailname + " </strong> <br> " + results[i].traillocation + `<a class="btn btn-sml btn-success float-right" href="/api/trails/${id}" role="button">More Info</a></li>`;
+                if ( results[i].trailimagesml) {
+                    str += `<li class="list-group-item">&nbsp;<img src="` + results[i].trailimagesml + `"> <br> <br> <strong>` + results[i].trailname + " </strong> <br> " + results[i].traillocation + `<a class="btn btn-sml btn-success float-right" href="/api/trails/${id}" role="button">More Info</a></li>`;
+                }
+                else {
+                    str += `<li class="list-group-item">&nbsp; <br> <strong>` + results[i].trailname + " </strong> <br> " + results[i].traillocation + `<a class="btn btn-sml btn-success float-right" href="/api/trails/${id}" role="button">More Info</a></li>`;
+                }
             }
             console.log(str);
             $("#favorites").html(str);
