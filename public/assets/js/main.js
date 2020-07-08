@@ -44,9 +44,42 @@ $(document).ready( async function (e) {
         console.error(err);
     }
 
-
-
 });
+
+
+var platform = new H.service.Platform({
+    apikey: mapBoxToken
+  });
+  var defaultLayers = platform.createDefaultLayers();
+  
+  //Step 2: initialize a map
+  var map = new H.Map(document.getElementById('map'),
+    defaultLayers.vector.normal.map,{
+    center: {lat: 30.94625288456589, lng: -54.10861860580418},
+    zoom: 1,
+    pixelRatio: window.devicePixelRatio || 1
+  });
+  // add a resize listener to make sure that the map occupies the whole container
+  window.addEventListener('resize', () => map.getViewPort().resize());
+  
+  //Step 3: make the map interactive
+  // MapEvents enables the event system
+  // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+// from https://developer.here.com/documentation/examples/maps-js/events/position-on-mouse-click
+function Click(map) {
+    // Attach an event listener to map display
+            // obtain the coordinates and display in an alert box.
+    map.addEventListener('tap', function (evt) {
+              var coord = map.screenToGeo(evt.currentPointer.viewportX,
+                    evt.currentPointer.viewportY);
+                    console.log(coord);
+            });
+}
+ 
+
+
+          
 
 $(".share").submit( function (e) {
         e.preventDefault();
@@ -55,6 +88,7 @@ $(".share").submit( function (e) {
         let summary  = $("#summary").val();
         let length = $("#length").val();
         let rating = $("#rating").val();
+
          
         saveFavorite(name, location, summary, length, rating);
         console.log("saved");
