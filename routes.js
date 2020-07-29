@@ -251,10 +251,11 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 				const fetchy = await fetch(trailsURL);
 				const list = await fetchy.json();
 				trails = list.trails;
-
+				town = capitalize(city);
+				territory = capitalize(state);
 				const client = await pool.connect();
 				console.log("connected");
-				results = client.query("SELECT * FROM outdoors WHERE location = $1, $2;", [city, state], function (err, result) {
+				results = client.query("SELECT * FROM outdoors WHERE location = $1, $2;", [town, territory], function (err, result) {
 						//often you wont want to close a client if there's a query error
 						//but if you DO want to close the client you can truthy it to the done method...
 						//done(true)  and it will dispose of it for you. Do NOT close it manually because you'll then
@@ -348,5 +349,18 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 			}
 		});
 
+
+		function capitalize(string) {
+			if (string.includes(' ') === false) {
+				return string[0].toUpperCase() +
+					string.slice(1);
+			} else {
+				var splitStr = string.split(' ');
+				for (var i = 0; i < splitStr.length; i++) {
+					splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+				}
+				return splitStr.join(' ');
+			}
+		}
 
 		module.exports = router;
