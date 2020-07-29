@@ -250,6 +250,20 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 
 				const fetchy = await fetch(trailsURL);
 				const list = await fetchy.json();
+
+				function capitalize(string) {
+					if (string.includes(' ') === false) {
+						return string[0].toUpperCase() +
+							string.slice(1);
+					} else {
+						var splitStr = string.split(' ');
+						for (var i = 0; i < splitStr.length; i++) {
+							splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+						}
+						return splitStr.join(' ');
+					}
+				}
+
 				trails = list.trails;
 				town = capitalize(city);
 				territory = capitalize(state);
@@ -283,6 +297,8 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 					lon: lon,
 					trails: trails
 	});
+
+});
 
 		router.get('/api/share', async (req, res) => {
 			let title = "Share nature :)";
@@ -334,7 +350,9 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 
 			res.send("success");
 
-		}); router.get('/db', async (req, res) => {
+		}); 
+		
+		router.get('/db', async (req, res) => {
 			try {
 				const client = await pool.connect();
 				const result = await client.query('SELECT * FROM test_table');
@@ -348,19 +366,5 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 				res.send("Error " + err);
 			}
 		});
-
-
-		function capitalize(string) {
-			if (string.includes(' ') === false) {
-				return string[0].toUpperCase() +
-					string.slice(1);
-			} else {
-				var splitStr = string.split(' ');
-				for (var i = 0; i < splitStr.length; i++) {
-					splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-				}
-				return splitStr.join(' ');
-			}
-		}
 
 		module.exports = router;
