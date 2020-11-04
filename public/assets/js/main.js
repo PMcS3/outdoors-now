@@ -1,14 +1,11 @@
 "use strict";
 let mapBoxToken = "pk.eyJ1IjoicG1jczMiLCJhIjoiY2tibDAzaG1qMTRiOTJxbWwxbzM2YmZtMCJ9.ELKTHnbZqERM3UaoUZ29Pw";
-
 const rootURL = "https://outdoorsnow.herokuapp.com";
-
 
 $(document).ready( async function (e) {
     
     try {
         let url = `${rootURL}/api/trails/favorites`;
-
         return $.ajax({
             type: "POST", // method
             url: url,
@@ -30,24 +27,17 @@ $(document).ready( async function (e) {
             }
             console.log(str);
             $("#favorites").html(str);
-
         }).fail(error => {
             console.error("FAIL", JSON.stringify(error));
         }).always((result) => {
             console.log("ALWAYS");
             /* console.log("ALWAYS", JSON.stringify(result)) */
-
-
         });
     } 
     catch (err) {
         console.error(err);
     }
-
-
-
 });
-
 $(".share").submit( function (e) {
         e.preventDefault();
         let name = $("#name").val();
@@ -65,9 +55,6 @@ $(".share").submit( function (e) {
         
     }
 );
-
-
-
 $(".search").submit(
     // anonymous callback function is called
     function (e) {
@@ -81,15 +68,12 @@ $(".search").submit(
         // get trail ID of favorited trail to save in "Favorited" database table
         //getID();
         getData();
-
         return false;
     }
 );
-
 $(".btn-small").click( function (e) {
     console.log("smt");
 });
-
 $(".fav").ready( function () 
 {
     $(".fav").click( function (e) 
@@ -100,20 +84,15 @@ $(".fav").ready( function ()
         $(this).removeClass("btn-outline-success");
         $(this).addClass("btn-warning");
         $(this).text("☆ Favorited");
-
     });
 });
-
-
 $("#button").click(function () {
     $("form").hide();
     $("h3").hide();
     $("#mapid").show();
 });
-
 async function addFavorite(id) {
     try {
-
         let url = `${rootURL}/api/trails/favorites/` + id;
         console.log(url);
         return $.ajax({
@@ -123,7 +102,6 @@ async function addFavorite(id) {
         }).done(result => { 
             console.log("Favorited this trail");
             console.log(JSON.stringify(result));
-
         }).fail(error => {
             console.error("FAIL", JSON.stringify(error));
         }).always((result) => {
@@ -133,22 +111,16 @@ async function addFavorite(id) {
     } catch (err) {
         console.error(err);
     }
-
 }
-
-
 // async function to get data
 async function getData() {
     try {
         let city = $("#city").val().toLowerCase();
         let state = $("#state").val().toLowerCase();
-
         if (city == "" || state == "") {
             return;
         }
-
         let url = `${rootURL}/api/trails/` + city + "/" + state;
-
         return $.ajax({
             type: "GET", // method
             url: url // path
@@ -173,7 +145,6 @@ async function getData() {
                 zoomOffset: -1,
                 accessToken: mapBoxToken
             }).addTo(mymap);
-
             function capitalize(string) {
                 if (string.includes(' ') === false) {
                     return string[0].toUpperCase() +
@@ -186,15 +157,12 @@ async function getData() {
                     return splitStr.join(' ');
                 }
             }
-
             function createMarker(lat, lon, name, location) {
                 return (
                     new L.marker([lat, lon]).bindPopup(`<b>${name}</b><br>${location}`).openPopup().addTo(mymap)
                 );
             }
-
             let heading = "Outdoors near: " + capitalize(city) + ", " + capitalize(state);
-
             let str = "";
             for (let i = 0; i < trails.length; i++) {
                 let id = trails[i].id;
@@ -202,6 +170,7 @@ async function getData() {
                 createMarker(trails[i].latitude, trails[i].longitude, trails[i].name, trails[i].location);
             }
             $("#trails").html(str);
+            $(".card-title").html(heading);
             $(".center").html(heading);
 
             }
@@ -210,20 +179,14 @@ async function getData() {
         }).always((result) => {
             console.log("ALWAYS");
             /* console.log("ALWAYS", JSON.stringify(result)) */
-
-
         });
     } catch (err) {
         console.error(err);
     }  
 }
-
-
 async function saveFavorite(name, location, summary, length, rating) {
     try {
         let id = "0" + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString();
-
-
         let url = `${rootURL}/api/favorites/add`;
         return $.ajax({
             type: "POST", // method
@@ -240,7 +203,6 @@ async function saveFavorite(name, location, summary, length, rating) {
             
             console.log("ADDED");
             console.log(result);
-
         }).fail(error => {
             console.error("FAIL", JSON.stringify(error));
         }).always((result) => {
