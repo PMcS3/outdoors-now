@@ -269,7 +269,7 @@ router.get('/api/trails/:city?/:state?', async (req, res) => {
 				territory = capitalize(state);
 				const client = await pool.connect();
 				console.log("connected");
-				results = client.query("SELECT * FROM outdoors WHERE location = $1, $2;", [town, territory], function (err, result) {
+				let results = client.query("SELECT * FROM outdoors WHERE location = $1, $2;", [town, territory], function (err, result) {
 						//often you wont want to close a client if there's a query error
 						//but if you DO want to close the client you can truthy it to the done method...
 						//done(true)  and it will dispose of it for you. Do NOT close it manually because you'll then
